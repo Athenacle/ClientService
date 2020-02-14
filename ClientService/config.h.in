@@ -1,0 +1,85 @@
+
+#ifndef INC_CONFIG_H
+#define INC_CONFIG_H
+
+#define PROJECT_NAME "@PROJECT_NAME@"
+
+#define PROJECT_VERSION "@PROJECT_VERSION@"
+
+//Build Information
+#define SOURCE_ROOT "@CMAKE_SOURCE_DIR@"
+
+#define BINARY_ROOT "@CMAKE_BINARY_DIR@"
+
+#define COMPILER "@CMAKE_CXX_COMPILER@"
+
+#define COMPILER_OPTION "@CMAKE_CXX_FLAGS@"
+
+#define BUILD_TIME "@ATHDNS_BUILD_TIME@"
+
+#define BUILD_ROOT "@CMAKE_SOURCE_DIR@"
+
+#define ENABLE_TESTING "@ATHDNS_ENABLE_TESTING@"
+
+#define BUILD_SHA "@ATHDNS_BUILD_SHA@"
+
+//BUILD SYSTEM
+#cmakedefine UNIX
+
+#cmakedefine WINDOWS
+
+//INCULUDE FILE
+
+#cmakedefine UNIX_HAVE_UNISTD
+
+#cmakedefine UNIX_HAVE_SYS_STAT
+
+#cmakedefine UNIX_HAVE_SYS_TIME
+
+#cmakedefine UNIX_HAVE_FCNTL
+
+//FUNCTION
+
+#cmakedefine UNIX_HAVE_GETTIMEOFDAY
+
+#if defined UNIX_HAVE_SYS_TIME && defined UNIX_HAVE_GETTIMEOFDAY
+#define GETTIMEOFDAY
+#endif
+
+#cmakedefine UNIX_HAVE_UNAME
+
+#cmakedefine UNIX_HAVE_WRITE
+
+#cmakedefine UNIX_HAVE_READ
+
+#cmakedefine UNIX_HAVE_STAT
+
+#cmakedefine UNIX_HAVE_OPEN
+
+#cmakedefine UNIX_HAVE_GETOPTLONG
+
+#cmakedefine UNIX_HAVE_STRERROR
+
+#cmakedefine HAVE_JEMALLOC
+
+#cmakedefine HAVE_BUILTIN_EXPECT
+
+#cmakedefine HAVE_TIMESPEC_TV_SEC
+
+#cmakedefine HAVE_TIMESPEC_TV_NSEC
+
+#cmakedefine UNIX_HAVE_CLOCK_GETTIME
+
+#cmakedefine UNIX_HAVE_SLEEP
+
+#if defined NDEBUG && defined HAVE_BUILTIN_EXPECT
+#define likely(exp) __builtin_expect((exp), 1)
+#define unlikely(exp) __builtin_expect((exp), 0)
+#endif  // NDEBUG && HAVE_BUILTIN_EXPECT
+
+#ifndef likely
+#define likely(exp) (exp)
+#define unlikely(exp) (exp)
+#endif  // likey
+
+#endif

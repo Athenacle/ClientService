@@ -1,0 +1,72 @@
+syntax = "proto3";
+
+message coreMessage {
+
+    enum Operation {
+        CHECK_VERSION = 0;
+        UPDATE_LOG = 1;
+        QUERY_LAST_EVENT = 2;
+        RETURN_LAST_EVENT = 3;
+        ACCEPT_LAST_EVENT = 4;
+        CONNECT = 5;
+        REFUSE = 6;
+    }
+
+    message updatePackage{
+        string versionString = 1;
+        string checkSum = 2;
+        string serviceName = 3;
+
+        bytes package = 4;
+    }
+
+    enum logLevel{
+        fatal = 0;
+        error = 1;
+        warning = 2;
+        info = 3;
+        verbose = 4;
+    }
+
+    message logPackage {
+        string scope = 1;
+        logLevel level = 2;
+        string rawEventMessage = 3;
+        string timeStamp = 4;
+        string xmlEventMessage =5;
+        uint32 recordID = 6;
+    }
+
+    enum osType{
+        windows_os = 0;
+        linux_os = 1;
+    }
+
+    int32 id = 1;
+
+    string clientName = 2;
+
+    Operation op = 3;
+
+    string timeStamp = 4;
+
+    osType os = 5;
+
+    string osVersion = 6;
+
+    string description = 7;
+
+    updatePackage update = 8;
+
+    repeated logPackage log = 9;
+
+    uint32 lastEvent = 10; // Optional for RETURN_LAST_EVENT
+
+    bool logNeedAccept = 11;
+
+    string machineID = 12;
+
+    int32 refuseID = 13;
+
+
+}

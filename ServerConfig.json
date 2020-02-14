@@ -1,0 +1,6 @@
+{
+    "host": "10.70.20.60",
+    "port": 5432,
+    "username": "postgres",
+    "password": "WXC6336"
+}

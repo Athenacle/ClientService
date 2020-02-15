@@ -1,7 +1,6 @@
 
 #include "protobufLib.h"
 
-
 #include <cassert>
 #include <sstream>
 
@@ -321,11 +320,15 @@ void LogPackage::buildPBObj(coreMessage& obj)
     const size_t size = 1024;
     char buffer[size];
 
-    snprintf(buffer,
-             size,
-             "LogPackage. Windows Event RecordID from %d to %d.",
-             (evts.cbegin()->rid),
-             (evts.cend()->rid));
+    if (evts.size() > 0) {
+        snprintf(buffer,
+                 size,
+                 "LogPackage. Windows Event RecordID from %d. Total size %ld.",
+                 (evts.cbegin()->rid),
+                 evts.size());
+    } else {
+        snprintf(buffer, size, "LogPackage include ZERO Windows Event.");
+    }
 
     Description(std::move(std::string(buffer)));
 

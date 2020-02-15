@@ -349,3 +349,5 @@ compile_commands.json
 
 ClientService/clientService.pb.cc
 ClientService/include/clientService.pb.h
+
+.ccls-cache/

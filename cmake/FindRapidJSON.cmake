@@ -1,4 +1,7 @@
 
+
+include(ExternalProject)
+
 foreach(opt RAPIDJSON_INCLUDEDIR RAPIDJSON_USE_SSE2 RAPIDJSON_USE_SSE42)
   if(${opt} AND DEFINED ENV{${opt}} AND NOT ${opt} STREQUAL "$ENV{${opt}}")
     message(WARNING "Conflicting ${opt} values: ignoring environment variable and using CMake cache entry.")
@@ -53,4 +56,15 @@ elseif(rapidjson_FIND_REQUIRED)
     message(FATAL_ERROR "Could not find rapidjson")
 else()
   message(STATUS "Optional package rapidjson was not found")
+
+  ExternalProject_Add(
+    rapidjson
+    URL https://github.com/Tencent/rapidjson/archive/v1.1.0.tar.gz
+    DOWNLOAD_NO_PROGRESS ON
+    PREFIX rapidjson
+    CONFIGURE_COMMAND ""
+    BUILD_COMMAND ""
+    INSTALL_COMMAND "")
+  ExternalProject_Get_Property(rapidjson source_dir binary_dir)
+  include_directories(${source_dir}/include)
 endif()

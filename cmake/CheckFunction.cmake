@@ -1,0 +1,5 @@
+include(CheckIncludeFile)
+include(CheckFunctionExists)
+include(CheckIncludeFileCXX)
+
+check_function_exists(uname UNIX_HAVE_UNAME)

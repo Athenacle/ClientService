@@ -68,16 +68,20 @@ namespace
                 pBuffer = new WCHAR[dwBufferSize * sizeof WCHAR];
 
                 if (pBuffer) {
-                    EvtFormatMessage(hMetadata,
-                                     hEvent,
-                                     0,
-                                     0,
-                                     NULL,
-                                     FormatId,
-                                     dwBufferSize,
-                                     pBuffer,
-                                     &dwBufferUsed);
-                    return nullptr;
+                    status = EvtFormatMessage(hMetadata,
+                                              hEvent,
+                                              0,
+                                              0,
+                                              NULL,
+                                              FormatId,
+                                              dwBufferSize,
+                                              pBuffer,
+                                              &dwBufferUsed);
+                    if (status) {
+                        return pBuffer;
+                    } else {
+                        return nullptr;
+                    }
                 }
             } else if (ERROR_EVT_MESSAGE_NOT_FOUND == status
                        || ERROR_EVT_MESSAGE_ID_NOT_FOUND == status) {
@@ -102,7 +106,7 @@ namespace
             auto msg = GetMessageString(hProviderMetadata, hEvt);
             if (msg != NULL) {
                 auto cmsg = Convert(msg);
-                evt.format = std::string(cmsg);
+                evt.format.swap(std::string(cmsg));
                 delete[] msg;
                 delete[] cmsg;
             } else {
@@ -120,7 +124,6 @@ namespace
 
         doc.Parse(xml);
 
-        evt.xml = std::string(xml);
 
         auto root = doc.RootElement();
         auto system = root->FirstChildElement("System");
@@ -145,6 +148,7 @@ namespace
             }
         }
 
+        evt.xml = std::move(std::string(xml));
         delete[] xml;
     }
 
@@ -236,8 +240,11 @@ namespace
                 goto cleanup;
             }
         }
-
-        return dwReturned;
+        if (sent.size() == 0) {
+            return EnumerateResults(hResults, ignore, sent);
+        } else {
+            return dwReturned;
+        }
     cleanup:
 
         for (DWORD i = 0; i < dwReturned; i++) {
@@ -289,14 +296,16 @@ namespace service
                     if (count < 0) {
                         break;
                     } else {
-                        LogPackage* lp =
-                            new LogPackage(count == EventForwardHandler::eventsPerSend);
-                        lp->AddLogEvent(eventsToSend);
-                        char* buffer;
-                        size_t size;
-                        lp->toBytes(&buffer, &size);
-                        HandlerDispatcher::GetHandlerDispatcher().Send(buffer, size);
-                        delete lp;
+                        if (eventsToSend.size() > 0) {
+                            LogPackage* lp =
+                                new LogPackage(count == EventForwardHandler::eventsPerSend);
+                            lp->AddLogEvent(eventsToSend);
+                            char* buffer;
+                            size_t size;
+                            lp->toBytes(&buffer, &size);
+                            HandlerDispatcher::GetHandlerDispatcher().Send(buffer, size);
+                            delete lp;
+                        }
                     }
 
                     if (event == EVENT_SUBCRIBE_EVENT) {

@@ -13,7 +13,7 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// 涓枃(绠�浣擄紝涓浗) resources
+// 中文(简体，中国) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
 LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
@@ -42,7 +42,7 @@ BEGIN
     "\0"
 END
 
-#endif
+#endif    // APSTUDIO_INVOKED
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -51,8 +51,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,1
- PRODUCTVERSION 1,0,0,1
+ FILEVERSION 1,0,0,2
+ PRODUCTVERSION 1,0,0,2
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -69,12 +69,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "WangXiao"
             VALUE "FileDescription", "ClientService dll."
-            VALUE "FileVersion", "1.0.0.1"
+            VALUE "FileVersion", "1.0.0.2"
             VALUE "InternalName", "WindowsClientService.dll"
             VALUE "LegalCopyright", "Copyright (C) 2020"
             VALUE "OriginalFilename", "WindowsClientService.dll"
             VALUE "ProductName", "WindowsClientService"
-            VALUE "ProductVersion", "1.0.0.1"
+            VALUE "ProductVersion", "1.0.0.2"
         END
     END
     BLOCK "VarFileInfo"
@@ -83,7 +83,7 @@ BEGIN
     END
 END
 
-#endif
+#endif    // 中文(简体，中国) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
